@@ -1,4 +1,3 @@
-1.
 a)Multi-user Operating System
 b)Process Management,Memory management
 c)#include <stdio.h>
