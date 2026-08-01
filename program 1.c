@@ -134,3 +134,51 @@ int main() {
 }
 
 9)
+ #include <stdio.h>
+#define SIZE 5
+int buffer[SIZE];
+int front=0,rear=0,count=0;
+void produce(int item){
+    if(count==SIZE)
+        printf("Buffer Full\n");
+    else{
+        buffer[rear]=item;
+        rear=(rear+1)%SIZE;
+        count++;
+    }
+}
+void consume(){
+    if(count==0)
+        printf("Buffer Empty\n");
+    else{
+        printf("Consumed %d\n",buffer[front]);
+        front=(front+1)%SIZE;
+        count--;
+    }
+}
+int main(){
+    produce(10);
+    produce(20);
+    produce(30);
+    consume();
+    consume();
+
+    return 0;
+}    
+     
+10)
+#include <stdio.h>
+int main() {
+    int bt[4]={5,3,8,6};
+    int wt[4];
+    int i,sum=0;
+    wt[0]=0;
+    for(i=1;i<4;i++)
+        wt[i]=wt[i-1]+bt[i-1];
+    for(i=0;i<4;i++){
+        printf("Process %d Waiting Time = %d\n",i+1,wt[i]);
+        sum+=wt[i];
+    }
+    printf("Average Waiting Time = %.2f",(float)sum/4);
+    return 0;
+}
