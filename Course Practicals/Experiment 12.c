@@ -1,4 +1,5 @@
 -> CODE :
+
 #include <stdio.h>
 int main()
 {
@@ -78,6 +79,7 @@ int main()
 }
 
 -> OUTPUT :
+
 Enter number of processes: 5
 Enter number of resource types: 3
 
