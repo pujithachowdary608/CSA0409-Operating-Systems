@@ -1,0 +1,226 @@
+Q1)
+-> CODE :
+
+#include <stdio.h>
+int main() {
+    int base, limit, logical, physical;
+    printf("Enter Base Register value: ");
+    scanf("%d", &base);
+    printf("Enter Limit Register value: ");
+    scanf("%d", &limit);
+    printf("Enter Logical Address: ");
+    scanf("%d", &logical);
+    if (logical >= 0 && logical < limit) {
+        physical = base + logical;
+        printf("\nLogical Address is VALID.\n");
+        printf("Physical Address = %d\n", physical);
+    } else
+{
+        printf("\nInvalid Logical Address! Address Trap.\n");
+    }
+    return 0;
+}
+
+-> OUTPUT :
+
+INVALID :
+Enter Base Register value: 1000
+Enter Limit Register value: 500
+Enter Logical Address: 700
+Invalid Logical Address! Address Trap.
+
+VALID :
+Enter Base Register value: 1000
+Enter Limit Register value: 800
+Enter Logical Address: 700
+Logical Address is VALID.
+Physical Address = 1700
+
+Q2)
+-> CODE :
+
+#include <stdio.h>
+int main() {
+    int pageSize, numPages;
+    int pageTable[50];
+    int pageNo, offset;
+    int frameNo, physicalAddress;
+    int i;
+    printf("Enter Page Size: ");
+    scanf("%d", &pageSize);
+    printf("Enter Number of Pages: ");
+    scanf("%d", &numPages);
+    printf("Enter Frame Number for each Page:\n");
+    for(i = 0; i < numPages; i++) {
+        printf("Page %d -> Frame: ", i);
+        scanf("%d", &pageTable[i]);
+    }
+    printf("\nEnter Page Number: ");
+    scanf("%d", &pageNo);
+    printf("Enter Offset: ");
+    scanf("%d", &offset);
+    if(pageNo >= 0 && pageNo < numPages && offset >= 0 && offset < pageSize) {
+        frameNo = pageTable[pageNo];
+        physicalAddress = frameNo * pageSize + offset;
+        printf("\nPage Number   : %d", pageNo);
+        printf("\nFrame Number  : %d", frameNo);
+        printf("\nOffset        : %d", offset);
+        printf("\nPhysical Address = %d\n", physicalAddress);
+    }
+    else {
+        printf("\nInvalid Page Number or Offset!\n");
+    }
+    return 0;
+}
+
+-> OUTPUT :
+
+Enter Page Size: 1024
+Enter Number of Pages: 4
+Enter Frame Number for each Page:
+Page 0 -> Frame: 5
+Page 1 -> Frame: 2
+Page 2 -> Frame: 8
+Page 3 -> Frame: 1
+Enter Page Number: 2
+Enter Offset: 500
+Page Number   : 2
+Frame Number  : 8
+Offset        : 500
+Physical Address = 8692
+
+Q3)
+-> CODE :
+
+#include <stdio.h>
+int main()
+{
+    int pageTable[20];
+    int n, pageSize;
+    int logicalAddress;
+    int pageNumber, offset;
+    int frameNumber, physicalAddress;
+    int i;
+    printf("Enter Page Size: ");
+    scanf("%d", &pageSize);
+    printf("Enter Number of Pages: ");
+    scanf("%d", &n);
+    printf("\nEnter Frame Number for Each Page:\n");
+    for(i = 0; i < n; i++)
+    {
+        printf("Page %d -> Frame: ", i);
+        scanf("%d", &pageTable[i]);
+    }
+    printf("\nEnter Logical Address: ");
+    scanf("%d", &logicalAddress);
+    pageNumber = logicalAddress / pageSize;
+    offset = logicalAddress % pageSize;
+    if(pageNumber >= n)
+    {
+        printf("\nInvalid Logical Address!\n");
+    }
+    else
+    {
+        frameNumber = pageTable[pageNumber];
+        physicalAddress = frameNumber * pageSize + offset;
+        printf("\nPage Number  : %d", pageNumber);
+        printf("\nOffset       : %d", offset);
+        printf("\nFrame Number : %d", frameNumber);
+        printf("\nPhysical Address = %d\n", physicalAddress);
+    }
+
+    return 0;
+}
+
+-> OUTPUT :
+
+Enter Page Size: 100
+Enter Number of Pages: 4
+Enter Frame Number for Each Page:
+Page 0 -> Frame: 5
+Page 1 -> Frame: 2
+Page 2 -> Frame: 8
+Page 3 -> Frame: 1
+Enter Logical Address: 250
+Page Number  : 2
+Offset       : 50
+Frame Number : 8
+Physical Address = 850
+
+Q4)
+-> CODE :
+
+#include <stdio.h>
+int main()
+{
+    float tlbTime, memoryTime;
+    float hitRatio;
+    float emat, withoutTLB;
+    printf("Enter TLB Lookup Time (ns): ");
+    scanf("%f", &tlbTime);
+    printf("Enter Main Memory Access Time (ns): ");
+    scanf("%f", &memoryTime);
+    printf("Enter TLB Hit Ratio (0 to 1): ");
+    scanf("%f", &hitRatio);
+    withoutTLB = 2 * memoryTime;
+    emat = hitRatio * (tlbTime + memoryTime)
+         + (1 - hitRatio) * (tlbTime + 2 * memoryTime);
+    printf("\nMemory Access Time without TLB = %.2f ns", withoutTLB);
+    printf("\nEffective Memory Access Time with TLB = %.2f ns\n", emat);
+    return 0;
+}
+
+-> OUTPUT :
+
+Enter TLB Lookup Time (ns): 10
+Enter Main Memory Access Time (ns): 100
+Enter TLB Hit Ratio (0 to 1): 0.8
+
+Memory Access Time without TLB = 200.00 ns
+Effective Memory Access Time with TLB = 130.00 ns
+
+Q5)
+-> CODE :
+
+#include <stdio.h>
+int main()
+{
+    int base, limit;
+    int logicalAddress, physicalAddress;
+    printf("Enter Base Register: ");
+    scanf("%d", &base);
+    printf("Enter Limit Register: ");
+    scanf("%d", &limit);
+    printf("Enter Logical Address: ");
+    scanf("%d", &logicalAddress);
+    if(logicalAddress >= 0 && logicalAddress < limit)
+    {
+        physicalAddress = base + logicalAddress;
+        printf("\nAccess Permitted.\n");
+        printf("Logical Address : %d\n", logicalAddress);
+        printf("Physical Address: %d\n", physicalAddress);
+    }
+    else
+    {
+        printf("\nMemory Protection Fault!\n");
+        printf("Unauthorized Memory Access.\n");
+    }
+    return 0;
+}
+
+-> OUTPUT :
+
+VALID :
+Enter Base Register: 1000
+Enter Limit Register: 500
+Enter Logical Address: 250
+Access Permitted.
+Logical Address : 250
+Physical Address: 1250
+
+INVALID :
+Enter Base Register: 1000
+Enter Limit Register: 500
+Enter Logical Address: 650
+Memory Protection Fault!
+Unauthorized Memory Access.
